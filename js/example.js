@@ -1,82 +1,89 @@
-const nameH1Elemnent = document.querySelector('h1.inline');
-
+const nameH1Element = document.querySelector('h1.inline');
 const connectNameElement = document.querySelector('span.red');
+const inputModalElement = document.querySelector('dialog#inputModal');
+const modalSubmitButton = document.querySelector('button.modalSubmit');
+const studentNoSpanElement = document.querySelector('span.studentNo');
+const emailSpanElement = document.querySelector('span.email');
 
-
-
-const inputModalElement = document.querySelector('#inputModal');
-
-
-
-
-const setUserName = (name) => {
-
-  nameH1Elemnent.textContent = name;
-
-  connectNameElement.textContent = name;
-
+const setUserName = (umane) => {
+    nameH1Element.textContent = umane;
+    connectNameElement.textContent = umane;
 };
 
-
-
-const localName = localStorage.getItem('name');
-
-if (localName) setUserName(localName);
-
-
-
-console.log(inputModalElement);
-
-nameH1Elemnent.onclick = () => {
-
-  inputModalElement.showModal();
-
-};
-const modalSubmitBtn = document.querySelector('button.modalSubmit');
-
-
-const studentNoElemnent = document.querySelector('.studentNo');
-const setstudentNo = (No) => {
-  studentNoElemnent.textContent = No;
-};
-const localNo = localStorage.getItem('No');
-if (localNo) setstudentNo(localNo);
-
-
-
-modalSubmitBtn.onclick = () => {
-
-  const modalFormElement = document.querySelector('.modalForm');
-
-  const formData = new FormData(modalFormElement);
-
-
-
-  for (const [key, value] of formData) {
-
-    localStorage.setItem(key, value);
-
-    if (key==='userName') setUserName(value);
-
-  }
-  for (const [key, value] of formData) {
-
-    localStorage.setItem(key, value);
-
-    if (key==='studentNo') setstudentNo(value);
-
-  }
-
-
-
-  inputModalElement.close();
-
+const setStudentNo = (stdNum) => {
+    studentNoSpanElement.textContent = stdNum;
 };
 
+const setUserEmail = (email) => {
+    emailSpanElement.textContent = email;
+};
 
+const chkStudentNo = (stdNum) => {
+    if (stdNum.length != 9 || stdNum === ``) {
+        return false;
+    } else {
+        return true;
+    }
+};
+//이메일 형식 체크
+const chkUserEmail = (email) => {
+    const testEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+    if (!testEmail.test(email) || email === ``) 
+        return false;
+    
+else 
+        return true;
+    }
+;
 
-inputModalElement.onclick = (event) => {
+const setLocalInfomation = () => {
+    const localName = localStorage.getItem('userName');
+    const localStudentNo = localStorage.getItem('studentNo');
+    const localUserEmail = localStorage.getItem('userEmail');
 
-  if (event.target.nodeName === 'DIALOG') inputModalElement.close();
+    if (localName) 
+        setUserName(localName);
+    if (localStudentNo) 
+        setStudentNo(localStudentNo);
+    if (localUserEmail) 
+        setUserEmail(localUserEmail);
+    };
 
+setLocalInfomation();
+
+nameH1Element.onclick = () => {
+    inputModalElement.showModal();
+};
+
+inputModalElement.onclick = (e) => {
+
+    if (e.target.nodeName === 'DIALOG') 
+        inputModalElement.close();
+    };
+
+modalSubmitButton.onclick = (e) => {
+
+    const modalFormElement = document.querySelector('form.modalForm');
+    const formData = new FormData(modalFormElement);
+    for (const [key, value] of formData) {
+        localStorage.setItem(key, value);
+        if (key === 'userEmail') {
+            if (chkUserEmail(value)) 
+                setUserEmail(value);
+            else 
+                alert(`이메일을 다시 입력해 주세요.`);
+            }
+        if (key === 'userName') {
+            setUserName(value);
+        }
+        if (key === 'studentNo') {
+            if (chkStudentNo(value)) 
+                setStudentNo(value);
+            else 
+                alert(`학번을 다시 입력해 주세요..`);
+            }
+        
+    }
+    modalFormElement.reset();
+    inputModalElement.close();
 };

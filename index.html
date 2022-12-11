@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="css/example.css">
 </head>
 <body>
-  <h1 class="inline">홍길동</h1>님 반갑습니다.
+  <h1 class="inline">김철수</h1>님 반갑습니다.
   <div>
-    현재 접속자는 <span class="red">홍길동</span>님 입니다.<br><br>
+    현재 접속자는 <span class="red">김철수</span>님 입니다.<br><br>
     <div>
-      학번 : <span class="studentNo">202030319</span><br />
-      이메일 : <span class="email">yhm0502@email.daelim.ac.kr</span><br />
+      학번 : <span class="studentNo">000000000</span><br>
+      이메일 : <span class="email">kim2014@naver.com</span><br>
     </div>
   </div>
   
@@ -23,19 +23,25 @@
             <label>
                 이름 : 
                 <input name="userName" type="text" />
-            </label><br />
+            </label>
+            <br>
             <label>
                 학번 : 
-                <input name="studentNo" type="number" />
-            </label><br />
+                <input name="studentNo" type="number" maxlength="9" class="stdNo" onkeypress=numberMaxLength(this)>
+            </label>
+            <br>
             <label>
-                이메일 : 
-                <input name="email" type="email" />
-            </label><br />
+                이메일:
+          <input name="userEmail" type="email"/>
+            </label>
+            <br>
         </form>
             <button class="modalSubmit">확인</button>
         </div>
     </dialog>
-    <script src="js/example.js"></script>
+    <script src="js/example.js">
+
+
+    </script>
 </body>
 </html>
